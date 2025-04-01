@@ -1,8 +1,6 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Routes,Link} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Getappliance from './components/Getappliance';
-import Addappliance from './components/Addappliance';
 import Signup from './components/signup';
 import Signin from './components/Signin';
 import Mpesapayment from './components/Mpesapayment';
