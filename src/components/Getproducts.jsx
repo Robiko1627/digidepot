@@ -80,8 +80,8 @@ const Getproducts = () => {
                     <div className="card-body">
                         <h5 className="mt-2">{product.product_name}</h5>
                         <p className="text-muted">{product.product_description.slice(0, 65)}</p>
-                        <b className="text-warning">{product.product_cost} KES</b>  <br />
-                        <button className="btn btn-success" onClick={()=> navigate("/makepayment", {state : {product}})}>Buy Now</button>
+                        <b className="text-warning">KES {product.product_cost} </b>  <br />
+                        <button className="btn btn-success" onClick={()=> navigate("/mpesapayment", {state : {product}})}>Buy Now</button>
                     </div>
                 </div>
             </div>
