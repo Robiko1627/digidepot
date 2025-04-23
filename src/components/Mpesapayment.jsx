@@ -26,8 +26,10 @@ const Mpesapayment = () => {
         
         <div className='col-md-6 card shadow p-3'>
             <b className='text-info'>{message}</b>
+
+            {product.product_photo}
             
-            <h4>Product Name: <span className='text-primary'>{product.product_cost}</span></h4>
+            <h4>Product Name: <span className='text-primary'>{product.product_name}</span></h4>
             <form onSubmit={submit}>
                 
                 <h4>Price of the Product: <span className='text-primary'>KES {product.product_cost}</span></h4>
