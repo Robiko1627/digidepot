@@ -1,0 +1,126 @@
+.signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0;
+    background: #0d1117;
+    min-height: 100vh;
+  }
+  
+  .signup-card {
+    background-color: #161b22;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+    width: 100%;
+    max-width: 400px;
+    color: #c9d1d9;
+  }
+  
+  .signup-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 700;
+    font-size: 24px;
+    color: #58a6ff;
+  }
+  
+  .signup-input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    background-color: #21262d;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    color: #c9d1d9;
+    transition: border 0.3s;
+  }
+  
+  .signup-input:focus {
+    border-color: #58a6ff;
+    outline: none;
+  }
+  
+  .signup-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #238636;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .signup-button:hover {
+    background-color: #2ea043;
+  }
+  
+  .signup-link {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: #8b949e;
+  }
+  
+  .loading-msg,
+  .success-msg,
+  .error-msg {
+    margin: 10px 0;
+    text-align: center;
+    font-size: 14px;
+  }
+  
+  .success-msg {
+    color: #2ea043;
+  }
+  
+  .error-msg {
+    color: #f85149;
+  }
+  
+  /* Lighthouse Password Animation */
+  .password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 12px;
+    background: none;
+    border: none;
+    color: #8b949e;
+    font-size: 0.9rem;
+    cursor: pointer;
+    z-index: 1;
+  }
+  
+  .toggle-password:hover {
+    color: #fff;
+  }
+  
+  .beam-on {
+    animation: lighthouse-beam 2s ease-out;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.05) 0%,
+      rgba(255, 255, 255, 0.3) 50%,
+      rgba(255, 255, 255, 0.05) 100%
+    );
+    background-size: 200% 100%;
+    background-position: -100% 0;
+  }
+  
+  @keyframes lighthouse-beam {
+    0% {
+      background-position: -100% 0;
+    }
+    100% {
+      background-position: 100% 0;
+    }
+  }
+  

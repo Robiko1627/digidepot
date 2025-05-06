@@ -1,39 +1,63 @@
 const Footer = () => {
     return (
-    <div>
-        <section className="row  mt-4 footer-background-color">
-            <div className="col-md-4 text-left text-light">
-                <h5 className="p-2 text-center text-info">About Us</h5>
-                <p>At Digi Depot, we're more than just an appliance store; we're your trusted local partner for all your home appliance needs. We're deeply rooted in the Westlands community, and our mission is to provide exceptional service, expert advice, and a wide selection of quality appliances that fit your lifestyle and budget. </p>
-                
-                <br/>
+      <div>
+        <section className="row mt-5 py-4 footer-background-color text-light">
+          {/* About Us */}
+          <div className="col-md-4 mb-4">
+            <h5 className="text-center text-info">About Us</h5>
+            <p>
+              Digi Depot is your trusted partner in home appliances. Based in the heart of Westlands, we’re committed to delivering top-quality products, reliable service, and expert advice to suit your modern lifestyle and budget.
+            </p>
+          </div>
+  
+          {/* Contact Form */}
+          <div className="col-md-4 mb-4">
+            <h5 className="text-center text-info">Contact Us</h5>
+            <form>
+              <input
+                className="form-control mb-2"
+                type="email"
+                placeholder="Your Email"
+                aria-label="Email Address"
+              />
+              <textarea
+                className="form-control mb-2"
+                rows="5"
+                placeholder="Your Message"
+                aria-label="Message"
+              ></textarea>
+              <button type="submit" className="btn btn-info w-100">
+                Send Message
+              </button>
+            </form>
+          </div>
+  
+          {/* Social Media */}
+          <div className="col-md-4 mb-4 text-center">
+            <h5 className="text-info">Connect With Us</h5>
+            <div className="d-flex justify-content-center my-2">
+              <a href="https://facebook.com" aria-label="Facebook" className="mx-2">
+                <img src="images/facebook.png" alt="Facebook" className="socialspictures" />
+              </a>
+              <a href="https://instagram.com/_.simply_robin._" aria-label="Instagram" className="mx-2">
+                <img src="images/instagram.jpg" alt="Instagram" className="socialspictures" />
+              </a>
             </div>
-            <div className="col-md-4 text-light">
-                <h5 className="p-2 text-center text-info">Reach Us Out</h5>
-                <input className="form-control" type="email" placeholder="Enter your email"/>
-                <br/>
-                <textarea className="form-control" rows="7" placeholder="Leave a comment"></textarea>
-                <br/>
-                <input type="submit" value="Send Message" className="btn btn-primary"/>
-            </div>
-            <div className="col-md-4 ">
-                <h4 className="text-center text-info">Connect With Us</h4>
-                <br/>
-                <a href="https://facebook.com">
-                <img src="images/facebook.png" alt="" className="socialspictures"/>
-                </a>
-                <a href="https://instagram.com">
-                <img src="images/instagram.jpg" alt="" className="socialspictures"/>
-                </a>
-                <p className="text-dark"> We are available on platforms such as Instagram and facebook and would very much appreciate your feedback on how we would improve our quality in service providence</p>
-            </div>
+            <p className="text-light">
+              We're active on social media! Follow us and let us know how we can better serve you.
+            </p>
+          </div>
         </section>
-        <footer className="text-white text-center p-2 mt-2 bootom-footer">
-                <h5>Developed by Robin Nzioka &copy; 2025.All rights reserved</h5>
+  
+        {/* Bottom Footer */}
+        <footer className="text-white text-center py-3 bg-dark">
+          <small>
+            &copy; 2025 Digi Depot. All rights reserved. | Designed by Robin Nzioka
+          </small>
         </footer>
-    </div>
+      </div>
     );
-    }
-     
-   
-    export default Footer;
+  };
+  
+  export default Footer;
+  

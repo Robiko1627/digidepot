@@ -1,0 +1,66 @@
+/* Wrapper with background gradient */
+.form-wrapper {
+    min-height: 100vh;
+    background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+    padding: 60px 20px;
+  }
+  
+  /* Glassmorphism card */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    color: white;
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  /* Title text with futuristic glow */
+  .text-glow {
+    font-weight: 600;
+    color: #00f7ff;
+    text-shadow: 0 0 10px #00f7ff, 0 0 20px #00f7ff;
+  }
+  
+  /* Neon-style submit button */
+  .neon-button {
+    background: #00f7ff;
+    color: #000;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    padding: 10px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .neon-button:hover {
+    background: #0ff;
+    box-shadow: 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff;
+    transform: translateY(-2px);
+  }
+  
+  /* Alerts */
+  .alert {
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+  
+  /* Form fields */
+  .form-control {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+  }
+  
+  .form-control:focus {
+    outline: none;
+    box-shadow: 0 0 5px #0ff;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+  }
+  

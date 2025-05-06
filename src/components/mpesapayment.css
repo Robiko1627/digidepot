@@ -1,0 +1,28 @@
+/* Form styling */
+.form-control {
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 100%;
+  background-color: white;
+  color: black; /* Ensure the text color is black */
+  font-size: 1.05rem;
+}
+
+.error-message {
+  color: red; /* Error text in red */
+}
+
+.payment-status {
+  color: green; /* Success text in green */
+  font-weight: bold;
+}
+
+/* Text adjustments for better visibility */
+.form-group label, .product-info p, .product-info h5 {
+  color: black; /* Ensure all text within labels and paragraphs is black */
+}
+
+.error-message, .payment-status {
+  color: black; /* Make the error and payment status text black */
+}

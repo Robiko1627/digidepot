@@ -1,0 +1,54 @@
+/* Initial slide and fade on page load */
+.glass-navbar {
+  background: rgba(0, 0, 0, 0.5) !important;
+  backdrop-filter: blur(10px);
+  animation: navbarInitialLoad 0.8s ease forwards;
+  opacity: 0;
+}
+
+/* Keyframes for initial load animation */
+@keyframes navbarInitialLoad {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Glow link effect */
+.glow-link {
+  transition: color 0.3s ease;
+}
+
+.glow-link:hover {
+  color: #ffc107 !important;
+  text-shadow: 0 0 5px rgba(255, 193, 7, 0.8);
+}
+
+/* Navbar toggler for dark backgrounds */
+.navbar-toggler {
+  border: none;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28255,255,255,0.8%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* Scroll-down hide and fade effect */
+.navbar-hide {
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+/* Scroll-up show and fade-in effect */
+.navbar-show {
+  transform: translateY(0);
+  opacity: 1;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  pointer-events: auto;
+}

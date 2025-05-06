@@ -1,138 +1,126 @@
 import { Link } from 'react-router-dom';
-//import the useState hook library
 import { useState } from 'react';
 import axios from 'axios';
 import Footer from './Footer';
 import Navbar from './Navbar';
+import './signup.css'; // Ensure this includes the lighthouse CSS below
+
 const Signup = () => {
-  //initialize the hooks
-  const[username, setUsername] = useState("");
-  const[email, setEmail] = useState("");
-  const[password,setPassword]= useState("");
-  const[phone,setPhone]= useState("")
-  //create 3 hooks that will capture the state of our application when the signup button is clicked
-  const[loading, setloading]=useState("");
-  const[error, setError]=useState("");
-  const[success, setSuccess]=useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [loading, setLoading] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [passwordError, setPasswordError] = useState("");
 
+  const togglePassword = () => setShowPassword(!showPassword);
 
+  const validatePassword = (password) => {
+    const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return regex.test(password);
+  };
 
-  //We create a function below that will handle the data submitted on the form all the way to the database
-  const submit = async (e) =>{
-    //asynckeyword- shows processes taking place in the background
-     //below we shall prevent our site from entire reload when the detelis are submitted 
-     //loading
+  const submit = async (e) => {
+    e.preventDefault();
+    setLoading("Please wait as we upload your details...");
+    setError("");
+    setSuccess("");
+    setPasswordError("");
 
-      e.preventDefault();
+    if (!validatePassword(password)) {
+      setPasswordError("Password must be at least 8 characters long and contain letters, numbers, and special characters.");
+      setLoading("");
+      return;
+    }
 
-      //update the loading hook with a message that will be displayed when auser clicks on the signup button
-      setloading("Please wait as we upload your details")
+    try {
+      const data = new FormData();
+      data.append("username", username);
+      data.append("email", email);
+      data.append("password", password);
+      data.append("phone", phone);
 
-      try{
-        //we create an object that will hold all the data on hooks(username,email,password,phone)
-        const data = new FormData();
-        //below we append the different derails onto mout object
-        data.append("username", username);
-        data.append("email", email);
-        data.append("password", password);
-        data.append("phone", phone);
+      const response = await axios.post("http://Robiko.pythonanywhere.com/api/signup", data);
+      setLoading("");
+      setSuccess(response.data.Message);
 
-        //use the axios library that will help us interact with the http requests
-        //this particular method we shall use is the post method
-
-        const response = await axios.post("http://Robiko.pythonanywhere.com/api/signup", data)
-        // after data has been inserted successfully, set the loading hook to empty
-        setloading("");
-
-        //Set the success hook with the message  get from a successful registration
-        setSuccess(response.data.Message)
-
-        console.log(response)
-        //clear all the input fields on the html form
-        //return the form to default
-        setUsername("");
-        setPassword("");
-        setEmail("");
-        setPhone("");
-
-
-      }
-      catch(error){
-        //update the loading hook to empty
-        setloading("");
-        //update the error with the error message
-        //setError("Unfornately, something went wrong")
-        setError(error.message)
-      }
-  }
-   
-    
-
-
-
-
-
+      setUsername("");
+      setEmail("");
+      setPassword("");
+      setPhone("");
+    } catch (error) {
+      setLoading("");
+      setError(error.message);
+    }
+  };
 
   return (
-    <div className="row justify-content-center mt-4">
-      <Navbar/>
-        <div className="col-md-6 card shadow p-4"> 
-          <h2>Sign Up</h2>
+    <>
+      <Navbar />
+      <div className="signup-container">
+        <div className="signup-card">
+          <h2 className="signup-title">📝 Sign Up</h2>
           <form onSubmit={submit}>
-              {loading}
-              {success}
-              {error}
-              <input type="text" 
-              placeholder="Enter The Username" 
-              className="form-control"
+            {loading && <p className="loading-msg">{loading}</p>}
+            {success && <p className="success-msg">{success}</p>}
+            {error && <p className="error-msg">{error}</p>}
+            {passwordError && <p className="error-msg">{passwordError}</p>}
+
+            <input
+              type="text"
+              placeholder="Enter your username"
+              className="signup-input"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              required/>  <br/>
+              required
+            />
 
-              {/* {username} */}
-
-
-              <input
+            <input
               type="email"
-              placeholder="Enter Email Address"
-              className="form-control"
+              placeholder="Enter your email"
+              className="signup-input"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required/>  <br/>
+              required
+            />
 
-              {/* {email} */}
-              
-
-
+            <div className="password-wrapper">
               <input
-              type="password"
-              placeholder="Enter The Password"
-              className="form-control"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required/>  <br/>
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                className={`signup-input ${showPassword ? 'beam-on' : ''}`}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <button
+                type="button"
+                className="toggle-password"
+                onClick={togglePassword}
+              >
+                {showPassword ? "🙈 Hide" : "👁 Show"}
+              </button>
+            </div>
 
-              {/* {password}  */}
-
-              <input      
+            <input
               type="text"
-              placeholder="Enter Phone Number"
-              className="form-control"
+              placeholder="Enter your phone number"
+              className="signup-input"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              required/>  <br/>  <br/>
+              required
+            />
 
-              {/* {phone} */}
-
-              <button type ="submit" className="btn btn-primary">Sign Up</button>
-
+            <button type="submit" className="signup-button">Sign Up</button>
           </form>
-
-        <p>Already have an account? <Link to={"/signin"}>Sign in</Link></p> 
+          <p className="signup-link">Already have an account? <Link to="/signin">Sign In</Link></p>
+        </div>
       </div>
-      <Footer/>
-    </div>
-  )
-}
+    </>
+  );
+};
 
 export default Signup;

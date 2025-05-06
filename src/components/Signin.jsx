@@ -3,106 +3,78 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
-
+import "./signin.css"; // Add this line
 
 const Signin = () => {
-    const[email, setEmail] = useState("");
-    const[password,setPassword]= useState("");
-    const[loading, setloading]=useState("");
-    const[error, setError]=useState("");
-    
-    const navigate = useNavigate()
-    const submit = async(e) =>{
-      e.preventDefault()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState("");
+  const [error, setError] = useState("");
 
-      setloading("Please wait as we log you in...")
+  const navigate = useNavigate();
 
+  const submit = async (e) => {
+    e.preventDefault();
+    setLoading("Please wait as we log you in...");
+    setError("");
 
-      try{
-        const data = new FormData();
+    try {
+      const data = new FormData();
+      data.append("email", email);
+      data.append("password", password);
 
-        data.append("email", email);
-        data.append("password", password);
+      const response = await axios.post("https://Robiko.pythonanywhere.com/api/addappliance", data);
+      setLoading("");
 
-        //access the post method from the library
-        const response = await axios.post("https://Robiko.pythonanywhere.com/api/addappliance", data)
-        //set the loading hook back to empty
-        setloading("")
-
-        if (response.data.user){
-          // save the details of the user into the local storage
-          localStorage.setItem("user", JSON.stringify(response.data.user));
-          // redirect the person to another page
-          // use the navigate hook to do this
-          navigate("/")
-        }
-        else{
-          //the user was not found so show a message
-          setError(response.data.Message)
-        }
+      if (response.data.user) {
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        navigate("/");
+      } else {
+        setError(response.data.Message);
       }
-      catch(error){
-        //set the loading hook back to empty
-        setloading("")
-        setError(error.response.data.Message)
-        //setError("User is not found")
-        
-      }
-
-        
-
-
-
-
-
-
-      
+    } catch (error) {
+      setLoading("");
+      setError(error.response?.data?.Message || "An error occurred.");
     }
-     
-
+  };
 
   return (
-    <div className="row justify-content-center mt-5">
-      <Navbar/>  
-      <div className="card shadow col-md-6 p-4">
-        <h2>Sign In</h2>
-        <form onSubmit={submit}>
-          {loading}
-          {error}
-        <input
-        type="email"
-        placeholder='Enter Your Email Address here'
-        className='form-control'
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}/> 
-        <br/>
+    <>
+      <Navbar />
+      <div className="signin-container">
+        <div className="signin-card">
+          <h2 className="signin-title">🔐 Sign In</h2>
+          <form onSubmit={submit}>
+            {loading && <p className="loading-msg">{loading}</p>}
+            {error && <p className="error-msg">{error}</p>}
 
-        {email}
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="signin-input"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
 
-        <input
-        type ="password"
-        placeholder='Enter the password'
-        className='form-control'
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        
-        
-        />
-        <br/>
-        {password}
+            <input
+              type="password"
+              placeholder="Enter your password"
+              className="signin-input"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
 
-
-        <button type="submit" className='btn btn-success'>Sign In</button>
-
-
-
-        </form>
-
-        
+            <button type="submit" className="signin-button">
+              Sign In
+            </button>
+          </form>
+        </div>
       </div>
-      <Footer/>
-    </div>
-  )
-}
+      
+    </>
+  );
+};
 
 export default Signin;

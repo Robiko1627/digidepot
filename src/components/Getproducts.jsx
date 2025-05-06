@@ -1,97 +1,152 @@
-import { useState, useEffect } from "react"; // for state management
-import axios from "axios"; //For API Access
-import { Link, useNavigate } from "react-router-dom"; // For link to other component
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 import Footer from "./Footer";
 import ImageCarousel from "./Carousel";
 import Navbar from "./Navbar";
 
 const Getproducts = () => {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState("");
+  const [error, setError] = useState("");
+  const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
-    // Initialize Hooks
-    const [products, setProducts] = useState([]);  // Default to empty array instead of a string
-    const [loading, setLoading] = useState(""); //For loading message
-    const [error, setError] = useState(""); //error message hook
+  const { addToCart } = useCart();
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
-    
-    //Specify image location URL
-    const img_url = "https://Robiko.pythonanywhere.com/static/images/"
-    
-    const getproducts = async()=>{
-        setLoading("Please wait, We are retrieving the products .."); // Set loading message when fetching starts
-        try {
-        const response = await axios.get("https://Robiko.pythonanywhere.com/api/getproducts")
-        setProducts(response.data)
-        console.log(response.data)
-        setLoading("")
-        }
-        catch(error){
-            setLoading("")
-            setError("There was an Error")    
-        }
-    }//end function
+  const img_url = "https://Robiko.pythonanywhere.com/static/images/";
+  const productsPerPage = 16;
 
-    // Call getproducts on Use Effect
-    useEffect(() => {
-       getproducts()
-    }, []); // empty dependency array ensures this runs only once when the component mounts
+  useEffect(() => {
+    const getproducts = async () => {
+      setLoading("Please wait, retrieving products...");
+      try {
+        const response = await axios.get("https://Robiko.pythonanywhere.com/api/getproducts");
+        setProducts(response.data);
+        setLoading("");
+      } catch {
+        setLoading("");
+        setError("There was an error loading products.");
+      }
+    };
+    getproducts();
+  }, []);
 
-     // Filtered products based on search
-     const [search, setSearch] = useState("");
-     const filtered_products = products.filter((item) =>
-       item.product_name.toLowerCase().includes(search.toLowerCase())||
-       item.product_description.toLowerCase().includes(search.toLowerCase()));
-   
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search]);
 
-    return (
-        
-    <div className="row">
-        <Navbar/>
-        <ImageCarousel/>
+  const filtered_products = products.filter(
+    (item) =>
+      item.product_name.toLowerCase().includes(search.toLowerCase()) ||
+      item.product_description.toLowerCase().includes(search.toLowerCase())
+  );
 
-         <h3 className="mt-1 text-danger ">Available Appliances</h3>
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = filtered_products.slice(indexOfFirstProduct, indexOfLastProduct);
+  const totalPages = Math.ceil(filtered_products.length / productsPerPage);
 
-         <div className="row justify-content-center mt-3 mb-3">
-        <input
-          className="form-control w-50"
-          type="search"
-          placeholder="Search Products..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-    </div>
+  const goToPage = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
-        {/* Bind Error Messages */}
-          {loading}
-          {error}
+  return (
+    <div className="background-wrapper py-3">
+      {/* Video background */}
+      <div className="video-background">
+        <video autoPlay loop muted className="background-video">
+          <source src="/videos/video1.mp4" type="video/mp4" />
+        </video>
+      </div>
 
-        {/* Map over products and display them */}
-        {filtered_products.map((product) => (
-            <div className="col-md-3 justify-content-center mb-3">
-                {/* Card with equal size */}
-                <div className="card shadow card-margin">
-                        <img 
-                            className="product_img mt-4"
-                            src={img_url + product.product_photo} 
-                            alt="missing"
-                        />
-                        {/* {product.product_photo} */}
-                  
-                    <div className="card-body">
-                        <h5 className="mt-2">{product.product_name}</h5>
-                        <p className="text-muted">{product.product_description.slice(0, 65)}</p>
-                        <b className="text-warning">KES {product.product_cost} </b>  <br />
-                        <button className="btn btn-success" onClick={()=> navigate("/mpesapayment", {state : {product}})}>Buy Now</button>
+      <Navbar />
+      <ImageCarousel />
+
+      <div className="container">
+        <h3 className="text-center text-info my-4">Explore Our Appliance Collection</h3>
+
+        {/* Search */}
+        <div className="row justify-content-center mb-4">
+          <input
+            className="form-control w-50 rounded-pill px-4 shadow-sm"
+            type="search"
+            placeholder="Search appliances..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+
+        {/* Loader/Error */}
+        {loading && <p className="text-center text-muted">{loading}</p>}
+        {error && <p className="text-danger text-center">{error}</p>}
+
+        {/* Products Grid */}
+        <div className="row g-4">
+          {currentProducts.map((product) => (
+            <div key={product.id} className="col-sm-6 col-md-4 col-lg-3">
+              <div className="card h-100 border-0 shadow-lg rounded-4 product-card">
+                <img
+                  className="card-img-top rounded-top-4"
+                  src={img_url + product.product_photo}
+                  alt={product.product_name}
+                  style={{ height: "220px", objectFit: "cover" }}
+                />
+                <div className="card-body d-flex flex-column">
+                  <h5 className="card-title fw-semibold text-dark">{product.product_name}</h5>
+                  <p className="card-text text-muted small mb-2">
+                    {product.product_description.slice(0, 70)}...
+                  </p>
+                  <div className="mt-auto">
+                    <p className="text-primary fw-bold fs-6">KES {product.product_cost}</p>
+                    <div className="d-grid gap-2">
+                      <button
+                        className="btn btn-info text-white"
+                        onClick={() =>
+                          navigate("/mpesapayment", { state: { product } })
+                        }
+                      >
+                        Buy Now
+                      </button>
+                      <button
+                        className="btn btn-outline-secondary"
+                        onClick={() => addToCart(product)}
+                      >
+                        Add to Cart
+                      </button>
                     </div>
+                  </div>
                 </div>
+              </div>
             </div>
-        ))}
+          ))}
+        </div>
 
-        <Footer/>
-        
+        {/* Pagination */}
+        <div className="d-flex justify-content-center my-5">
+          <nav>
+            <ul className="pagination pagination-lg">
+              {[...Array(totalPages).keys()].map((num) => (
+                <li
+                  key={num + 1}
+                  className={`page-item ${currentPage === num + 1 ? "active" : ""}`}
+                >
+                  <button
+                    className="page-link"
+                    onClick={() => goToPage(num + 1)}
+                  >
+                    {num + 1}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+      </div>
     </div>
-    );
-
-}
+  );
+};
 
 export default Getproducts;
