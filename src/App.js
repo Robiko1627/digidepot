@@ -2,6 +2,7 @@ import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'animate.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import Signup from './components/signup';
 import Signin from './components/Signin';
 import Mpesapayment from './components/Mpesapayment';
@@ -11,7 +12,7 @@ import Aboutus from './components/Aboutus';
 import Chat from './components/Chat';
 import { CartProvider } from './context/CartContext'; // Import CartProvider
 import Navbar from './components/Navbar'; // Ensure your Navbar is in place
-import Footer from './components/Footer'; // You can include Footer to have it globally if required
+
 import Cart from './context/Cart'; // Import Cart page
 
 function App() {
@@ -39,8 +40,7 @@ function App() {
             <Route path="/cart" element={<Cart />} /> {/* Add Cart Route */}
           </Routes>
 
-          {/* Footer Section */}
-          <Footer />
+          
         </div>
       </Router>
     </CartProvider>

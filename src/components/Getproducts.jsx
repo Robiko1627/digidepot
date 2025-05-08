@@ -68,15 +68,32 @@ const Getproducts = () => {
       <div className="container">
         <h3 className="text-center text-info my-4">Explore Our Appliance Collection</h3>
 
-        {/* Search */}
-        <div className="row justify-content-center mb-4">
-          <input
-            className="form-control w-50 rounded-pill px-4 shadow-sm"
-            type="search"
-            placeholder="Search appliances..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+        {/* Opaque Search Bar */}
+        <div className="row justify-content-center mb-5">
+          <div className="col-12 col-md-8 col-lg-6">
+            <div
+              className="input-group shadow-lg"
+              style={{
+                backgroundColor: "rgba(255, 255, 255, 0.85)",
+                borderRadius: "50px",
+                overflow: "hidden"
+              }}
+            >
+              <span className="input-group-text bg-info text-white border-0">
+                <i className="bi bi-search"></i>
+              </span>
+              <input
+                className="form-control border-0"
+                style={{
+                  backgroundColor: "rgba(255, 255, 255, 0.9)"
+                }}
+                type="search"
+                placeholder="Search for appliances, brands, or features..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+          </div>
         </div>
 
         {/* Loader/Error */}
@@ -104,9 +121,7 @@ const Getproducts = () => {
                     <div className="d-grid gap-2">
                       <button
                         className="btn btn-info text-white"
-                        onClick={() =>
-                          navigate("/mpesapayment", { state: { product } })
-                        }
+                        onClick={() => navigate("/mpesapayment", { state: { product } })}
                       >
                         Buy Now
                       </button>
@@ -145,6 +160,8 @@ const Getproducts = () => {
           </nav>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 };

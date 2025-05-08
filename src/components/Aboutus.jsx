@@ -1,7 +1,6 @@
 import Footer from './Footer';
 import Navbar from './Navbar';
 
-
 const Aboutus = () => {
   return (
     <div className="aboutus-wrapper">
@@ -15,7 +14,7 @@ const Aboutus = () => {
           <div className="col-md-6 mb-4">
             <div className="card border-0 shadow-lg team-card">
               <img
-                src="images/team.jpg"
+                src="images/backgphoto.jpg"
                 alt="Our Team"
                 className="img-fluid rounded-3"
               />
@@ -28,9 +27,9 @@ const Aboutus = () => {
               <h2 className="text-success">Our Team</h2>
               <ul className="list-group list-group-flush mb-3">
                 <li className="list-group-item">👩‍💼 Robin Nzioka – CEO</li>
-                <li className="list-group-item">🧑‍💼 Bernard – COO</li>
+                <li className="list-group-item">🧑‍💼 Tracy – COO</li>
                 <li className="list-group-item">👨 Joseph – Member</li>
-                <li className="list-group-item">👩 Mary – Member</li>
+                <li className="list-group-item">👩 Moses – Member</li>
               </ul>
               <p className="text-muted">
                 At Digi Depot, we're a passionate team committed to helping
@@ -38,14 +37,14 @@ const Aboutus = () => {
                 appliances and unmatched service.
               </p>
               <h4 className="text-primary">
-                Over <strong>200+ appliances</strong>, <strong>1200+ customers</strong> served
+                Over <strong>1700+ appliances</strong>, <strong>7 years of experience</strong>, <strong>1200+ customers</strong> served
               </h4>
             </div>
           </div>
         </div>
       </section>
 
-      
+      <Footer /> {/* Footer added here */}
     </div>
   );
 };

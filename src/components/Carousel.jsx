@@ -1,43 +1,60 @@
 import React from "react";
-import { Link } from "react-router-dom"; // ✅ Fixes "Link is not defined"
 
-const ImageCarousel = () => {
+const Carousel = () => {
   return (
-    <section className="row">
+    <section className="row my-4">
       <div className="col-md-1"></div>
       <div className="col-md-10">
-        <div className="carousel slide" data-bs-ride="carousel" id="mycarousel">
+        <div
+          id="mycarousel"
+          className="carousel slide rounded-4 shadow-lg overflow-hidden"
+          data-bs-ride="carousel"
+          data-bs-interval="3000"
+        >
           {/* Indicators */}
           <div className="carousel-indicators">
-            <button type="button" data-bs-target="#mycarousel" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#mycarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#mycarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-            <button type="button" data-bs-target="#mycarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+            {[0, 1, 2, 3].map((num) => (
+              <button
+                key={num}
+                type="button"
+                data-bs-target="#mycarousel"
+                data-bs-slide-to={num}
+                className={num === 0 ? "active" : ""}
+                aria-current={num === 0 ? "true" : undefined}
+                aria-label={`Slide ${num + 1}`}
+              ></button>
+            ))}
           </div>
 
           {/* Slides */}
           <div className="carousel-inner">
-            <div className="carousel-item active">
-              <img src="images/appliance1.jpg" className="d-block w-100" height="300px" alt="Slide 1" />
-            </div>
-            <div className="carousel-item">
-              <img src="images/appliance2.jpg" className="d-block w-100" height="300px" alt="Slide 2" />
-            </div>
-            <div className="carousel-item">
-              <img src="images/appliance3.jpg" className="d-block w-100" height="300px" alt="Slide 3" />
-            </div>
-            <div className="carousel-item">
-              <img src="images/appliance4.jpg" className="d-block w-100" height="300px" alt="Slide 4" />
-            </div>
+            {["appliance1.jpg", "appliance2.jpg", "appliance3.jpg", "appliance4.jpg"].map((img, idx) => (
+              <div key={img} className={`carousel-item ${idx === 0 ? "active" : ""}`}>
+                <div className="carousel-img-wrapper position-relative">
+                  <img
+                    src={`images/${img}`}
+                    className="d-block w-100 carousel-img"
+                    alt={`Slide ${idx + 1}`}
+                    height="400"
+                  />
+                  <div className="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-3">
+                    <h5>Smart Tech for Modern Living</h5>
+                    <p>Upgrade your home with cutting-edge appliances from DigiDepot.</p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
 
           {/* Controls */}
-          <Link to="#mycarousel" className="carousel-control-prev" data-bs-slide="prev">
-            <span className="carousel-control-prev-icon"></span>
-          </Link>
-          <Link to="#mycarousel" className="carousel-control-next" data-bs-slide="next">
-            <span className="carousel-control-next-icon"></span>
-          </Link>
+          <a className="carousel-control-prev" href="#mycarousel" role="button" data-bs-slide="prev">
+            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span className="visually-hidden">Previous</span>
+          </a>
+          <a className="carousel-control-next" href="#mycarousel" role="button" data-bs-slide="next">
+            <span className="carousel-control-next-icon" aria-hidden="true"></span>
+            <span className="visually-hidden">Next</span>
+          </a>
         </div>
       </div>
       <div className="col-md-1"></div>
@@ -45,4 +62,4 @@ const ImageCarousel = () => {
   );
 };
 
-export default ImageCarousel; 
+export default Carousel;

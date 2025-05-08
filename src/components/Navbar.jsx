@@ -30,9 +30,17 @@ const Navbar = () => {
   return (
     <nav className={`navbar navbar-expand-md fixed-top glass-navbar shadow-sm py-3 px-4 animate-navbar ${showNavbar ? 'navbar-show' : 'navbar-hide'}`}>
       <div className="container-fluid">
-        <Link to="/" className="navbar-brand fw-bold fs-4 text-white">
+        {/* Brand with Logo */}
+        <Link to="/" className="navbar-brand fw-bold fs-4 text-white d-flex align-items-center gap-2">
+          <img
+            src="/images/appliance-logo.GIF" // Make sure this path is correct
+            alt="Appliance Logo"
+            style={{ width: "40px", height: "40px", objectFit: "contain" }}
+          />
           Digi<span className="text-warning">Depot</span>
         </Link>
+
+        {/* Toggler */}
         <button
           className="navbar-toggler bg-light"
           type="button"
@@ -41,6 +49,8 @@ const Navbar = () => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
+
+        {/* Navbar Items */}
         <div className="collapse navbar-collapse" id="navbarcontents">
           <ul className="navbar-nav me-auto gap-2">
             <li className="nav-item">
@@ -54,6 +64,7 @@ const Navbar = () => {
               </Link>
             </li>
           </ul>
+
           <ul className="navbar-nav ms-auto gap-2">
             <li className="nav-item">
               <Link to="/aboutus" className="nav-link text-white fw-semibold glow-link">
