@@ -17,6 +17,16 @@ const Mpesapayment = () => {
   const isValidPhoneNumber = (number) => /^07\d{8}$/.test(number);
   const isValidAmount = (amount) => !isNaN(amount) && parseFloat(amount) > 0;
 
+  // Function to truncate description to 20 words
+  const truncateDescription = (description) => {
+    if (!description) return '';
+    const words = description.split(' ');
+    if (words.length > 20) {
+      return words.slice(0, 20).join(' ') + '...';
+    }
+    return description;
+  };
+
   // Calculate cart total or use direct product cost
   const cartTotal = cartItems.reduce(
     (sum, item) => sum + parseFloat(item.product_cost) * item.quantity,
@@ -74,7 +84,7 @@ const Mpesapayment = () => {
                     </div>
                     <div className="col-md-8">
                       <h4 className="text-dark">{directProduct.product_name}</h4>
-                      <p className="text-dark">{directProduct.product_description}</p>
+                      <p className="text-dark">{truncateDescription(directProduct.product_description)}</p>
                       <p className="h5 text-success fw-bold">KES {directProduct.product_cost}</p>
                     </div>
                   </div>
@@ -93,7 +103,7 @@ const Mpesapayment = () => {
                       </div>
                       <div className="col-md-6">
                         <h5 className="text-dark">{product.product_name}</h5>
-                        <p className="text-dark small">{product.product_description}</p>
+                        <p className="text-dark small">{truncateDescription(product.product_description)}</p>
                       </div>
                       <div className="col-md-4 text-end">
                         <p className="mb-1 text-dark">KES {product.product_cost} x {product.quantity}</p>

@@ -1,6 +1,5 @@
 import { useCart } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 import Footer from '../components/Footer';
 
 const Cart = () => {
@@ -20,9 +19,32 @@ const Cart = () => {
     navigate('/mpesapayment');
   };
 
+  // Calculate subtotal for each product with proper fallbacks
+  const calculateSubtotal = (product) => {
+    const cost = Number(product.product_cost) || 0;
+    const quantity = Number(product.quantity) || 0;
+    return (cost * quantity).toFixed(2);
+  };
+
+  // Calculate total price with proper fallback
+  const displayTotal = () => {
+    if (typeof totalPrice === 'number' && !isNaN(totalPrice)) {
+      return totalPrice.toFixed(2);
+    }
+    
+    // Fallback calculation if totalPrice is not provided
+    const calculatedTotal = cartItems.reduce((sum, item) => {
+      const cost = Number(item.product_cost) || 0;
+      const quantity = Number(item.quantity) || 0;
+      return sum + (cost * quantity);
+    }, 0);
+    
+    return calculatedTotal.toFixed(2);
+  };
+
   return (
     <>
-      <main style={{ paddingBottom: '100px' }}> {/* Ensures space for footer */}
+      <main style={{ paddingBottom: '100px' }}>
         <div className="container mt-5 pb-5">
           <h2 className="text-center text-success">Your Cart ({totalItems} {totalItems === 1 ? 'item' : 'items'})</h2>
           {cartItems.length === 0 ? (
@@ -42,12 +64,11 @@ const Cart = () => {
                       <div className="card-body">
                         <h5 className="card-title">{product.product_name}</h5>
                         <p className="card-text text-muted">
-                          {product.product_description.slice(0, 60)}...
+                          {product.product_description?.slice(0, 60)}...
                         </p>
-                        <p className="text-warning">KES {product.product_cost}</p>
-                        <p className="text-info">Subtotal: KES {(product.product_cost * product.quantity).toFixed(2)}</p>
+                        <p className="text-warning">KES {Number(product.product_cost)?.toFixed(2) || '0.00'}</p>
+                        <p className="text-info">Subtotal: KES {calculateSubtotal(product)}</p>
 
-                        {/* Quantity Control */}
                         <div className="d-flex justify-content-between align-items-center">
                           <button
                             className="btn btn-sm btn-outline-secondary"
@@ -65,7 +86,6 @@ const Cart = () => {
                           </button>
                         </div>
 
-                        {/* Remove Item */}
                         <button
                           className="btn btn-danger mt-2 w-100"
                           onClick={() => removeFromCart(product.id)}
@@ -80,7 +100,7 @@ const Cart = () => {
 
               <div className="d-flex justify-content-between mt-4 align-items-center">
                 <div>
-                  <h3>Total: KES {totalPrice.toFixed(2)}</h3>
+                  <h3>Total: KES {displayTotal()}</h3>
                   <p className="text-muted">{cartItems.length} {cartItems.length === 1 ? 'product' : 'products'} in cart</p>
                 </div>
                 <div>
@@ -104,7 +124,6 @@ const Cart = () => {
         </div>
       </main>
 
-      {/* Footer placed outside the main content */}
       <Footer />
     </>
   );
