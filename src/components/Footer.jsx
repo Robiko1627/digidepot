@@ -1,3 +1,5 @@
+import React from 'react';
+
 const Footer = () => {
   return (
     <div>
@@ -7,25 +9,32 @@ const Footer = () => {
         <div className="col-md-4">
           <h5 className="text-light fw-bold text-center mb-3">About Us</h5>
           <p className="text-light small">
-            Digi Depot is your trusted partner in home appliances. Based in Westlands, Nairobi — we deliver top-tier appliances with unmatched customer support to suit your needs and budget. Our business number is +254726570978
+            Digi Depot is your trusted partner in home appliances. Based in Westlands, Nairobi — we deliver top-tier appliances with unmatched customer support to suit your needs and budget.
           </p>
         </div>
 
         {/* Contact Form */}
         <div className="col-md-4">
           <h5 className="text-light fw-bold text-center mb-3">Contact Us</h5>
-          <form>
+          <form
+            action="https://formspree.io/f/myzwjlwg"
+            method="POST"
+          >
             <input
               className="form-control mb-2 rounded-pill shadow-sm border-0"
               type="email"
+              name="email"
               placeholder="Your Email"
               aria-label="Email Address"
+              required
             />
             <textarea
               className="form-control mb-2 rounded-pill shadow-sm border-0"
+              name="message"
               rows="4"
               placeholder="Your Message"
               aria-label="Message"
+              required
             ></textarea>
             <button type="submit" className="btn btn-primary w-100 rounded-pill shadow-lg">
               Send Message

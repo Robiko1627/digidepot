@@ -27,7 +27,7 @@ const Aboutus = () => {
               <h2 className="text-success">Our Team</h2>
               <ul className="list-group list-group-flush mb-3">
                 <li className="list-group-item">👩‍💼 Robin Nzioka – CEO</li>
-                <li className="list-group-item">🧑‍💼 Tracy – COO</li>
+                <li className="list-group-item">🧑‍💼 Jorell – COO</li>
                 <li className="list-group-item">👨 Joseph – Member</li>
                 <li className="list-group-item">👩 Moses – Member</li>
               </ul>
