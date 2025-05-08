@@ -1,20 +1,20 @@
 import { useCart } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Footer from '../components/Footer';
 
 const Cart = () => {
-  const { cartItems = [], removeFromCart, clearCart, increaseQuantity, decreaseQuantity } = useCart();
+  const { 
+    cartItems = [], 
+    removeFromCart, 
+    clearCart, 
+    increaseQuantity, 
+    decreaseQuantity,
+    totalItems,
+    totalPrice
+  } = useCart();
+  
   const navigate = useNavigate();
-  const [totalPrice, setTotalPrice] = useState(0);
-
-  useEffect(() => {
-    if (Array.isArray(cartItems)) {
-      setTotalPrice(
-        cartItems.reduce((total, item) => total + parseFloat(item.product_cost) * item.quantity, 0)
-      );
-    }
-  }, [cartItems]);
 
   const handleCheckout = () => {
     navigate('/mpesapayment');
@@ -23,8 +23,8 @@ const Cart = () => {
   return (
     <>
       <main style={{ paddingBottom: '100px' }}> {/* Ensures space for footer */}
-        <div className="container mt-5 pb-5"> {/* pb-5 adds Bootstrap padding-bottom */}
-          <h2 className="text-center text-success">Your Cart</h2>
+        <div className="container mt-5 pb-5">
+          <h2 className="text-center text-success">Your Cart ({totalItems} {totalItems === 1 ? 'item' : 'items'})</h2>
           {cartItems.length === 0 ? (
             <p className="text-center text-danger">Your cart is empty</p>
           ) : (
@@ -45,6 +45,7 @@ const Cart = () => {
                           {product.product_description.slice(0, 60)}...
                         </p>
                         <p className="text-warning">KES {product.product_cost}</p>
+                        <p className="text-info">Subtotal: KES {(product.product_cost * product.quantity).toFixed(2)}</p>
 
                         {/* Quantity Control */}
                         <div className="d-flex justify-content-between align-items-center">
@@ -66,7 +67,7 @@ const Cart = () => {
 
                         {/* Remove Item */}
                         <button
-                          className="btn btn-danger mt-2"
+                          className="btn btn-danger mt-2 w-100"
                           onClick={() => removeFromCart(product.id)}
                         >
                           Remove
@@ -77,13 +78,23 @@ const Cart = () => {
                 ))}
               </div>
 
-              <div className="d-flex justify-content-between mt-4">
-                <h3>Total: KES {totalPrice.toFixed(2)}</h3>
+              <div className="d-flex justify-content-between mt-4 align-items-center">
                 <div>
-                  <button className="btn btn-secondary" onClick={clearCart}>
+                  <h3>Total: KES {totalPrice.toFixed(2)}</h3>
+                  <p className="text-muted">{cartItems.length} {cartItems.length === 1 ? 'product' : 'products'} in cart</p>
+                </div>
+                <div>
+                  <button 
+                    className="btn btn-secondary me-3" 
+                    onClick={clearCart}
+                  >
                     Clear Cart
                   </button>
-                  <button className="btn btn-success ml-3" onClick={handleCheckout}>
+                  <button 
+                    className="btn btn-success" 
+                    onClick={handleCheckout}
+                    disabled={cartItems.length === 0}
+                  >
                     Proceed to Checkout
                   </button>
                 </div>
