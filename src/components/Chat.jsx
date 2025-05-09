@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
-import './Chat.css'; // Make sure your Chat.css is updated as well
+import './Chat.css';
 
 const pairs = [
-  // Greetings
   {
     pattern: /\b(hi|hello|hey|greetings|good (morning|afternoon|evening))\b/,
     response: [
@@ -10,8 +9,6 @@ const pairs = [
       "Welcome to DigiDepot! How can I assist you today?"
     ]
   },
-
-  // Asking how the bot is
   {
     pattern: /\bhow (are|r) (you|u)\b/,
     response: [
@@ -19,8 +16,6 @@ const pairs = [
       "Doing well! What can I help you shop for today?"
     ]
   },
-
-  // About DigiDepot
   {
     pattern: /\b(what is digidepot|who are you|about digidepot|what do you sell)\b/,
     response: [
@@ -28,8 +23,6 @@ const pairs = [
       "We sell everything from TVs and fridges to laptops and kitchen gadgets!"
     ]
   },
-
-  // Product categories
   {
     pattern: /\b(tv|television|fridge|refrigerator|microwave|oven|blender|laptop|phone|washing machine|freezer|speakers|soundbar|air conditioner|iron|kettle|toaster|home appliances|gadgets)\b/,
     response: [
@@ -37,8 +30,6 @@ const pairs = [
       "Looking for appliances? We’ve got TVs, LG & Samsung fridges, microwaves, washing machines, and even kettles!"
     ]
   },
-
-  // Product brands
   {
     pattern: /\b(lg|samsung|ramtons|sony|bosch|philips|hisense|lenovo|hp|dell|asus)\b/,
     response: [
@@ -46,8 +37,6 @@ const pairs = [
       "You can find top brands like LG, Bosch, Lenovo, Sony, and Philips in our store!"
     ]
   },
-
-  // Availability
   {
     pattern: /\b(do you have|in stock|available|can I get|sell|buy)\b/,
     response: [
@@ -55,8 +44,6 @@ const pairs = [
       "Yes! Our items are available online and ready for M-PESA checkout."
     ]
   },
-
-  // Payment / M-PESA
   {
     pattern: /\b(mpesa|pay|payment|checkout|buy|how to pay|purchase)\b/,
     response: [
@@ -64,17 +51,13 @@ const pairs = [
       "Click 'Buy Now' on any product, then choose M-PESA or other options to pay."
     ]
   },
-
-  // Delivery
   {
     pattern: /\b(delivery|ship|shipping|how long|arrive)\b/,
     response: [
-      "Delivery usually takes 1-2 working days depending on your location 📦",
-      "We deliver across Kenya — most orders arrive within 24-48 hours!"
+      "Delivery usually takes 1–2 working days depending on your location 📦",
+      "We deliver across Kenya — most orders arrive within 24–48 hours!"
     ]
   },
-
-  // Return / issues
   {
     pattern: /\b(return|not working|refund|broken|wrong item|problem|defective)\b/,
     response: [
@@ -82,8 +65,6 @@ const pairs = [
       "Our return policy allows exchanges or refunds for damaged or incorrect items. We’ve got you covered!"
     ]
   },
-
-  // Discount / Offers
   {
     pattern: /\b(discount|offer|sale|promotion|deal|promo)\b/,
     response: [
@@ -91,8 +72,6 @@ const pairs = [
       "Don't miss out! Check our site for current promotions on TVs, fridges, and more."
     ]
   },
-
-  // Contact / support / hours
   {
     pattern: /\b(open|hours|support|when|weekends|contact)\b/,
     response: [
@@ -100,8 +79,6 @@ const pairs = [
       "You can shop anytime! Our customer service team is here daily between 8AM and 8PM."
     ]
   },
-
-  // Search help
   {
     pattern: /\b(search|find|looking for|how to find|locate|browse)\b/,
     response: [
@@ -109,8 +86,6 @@ const pairs = [
       "Try typing the product name in the search field at the top of the homepage!"
     ]
   },
-
-  // Gratitude
   {
     pattern: /\b(thank(s)?|thank you|appreciate|grateful)\b/,
     response: [
@@ -118,8 +93,6 @@ const pairs = [
       "Glad to help! Enjoy shopping with DigiDepot!"
     ]
   },
-
-  // Goodbye
   {
     pattern: /\b(bye|goodbye|see you|later|exit)\b/,
     response: [
@@ -127,8 +100,6 @@ const pairs = [
       "See you soon! Thanks for choosing DigiDepot."
     ]
   },
-
-  // Catch-all
   {
     pattern: /.*/,
     response: [
@@ -138,10 +109,10 @@ const pairs = [
   }
 ];
 
-
 const ChatBot = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
+  const [failCount, setFailCount] = useState(0);
   const endRef = useRef(null);
 
   const handleSend = () => {
@@ -152,11 +123,30 @@ const ChatBot = () => {
     setMessages(prev => [...prev, userMessage]);
 
     const match = pairs.find(pair => new RegExp(pair.pattern).test(trimmed.toLowerCase()));
-    const response = match ? match.response[Math.floor(Math.random() * match.response.length)] : "Sorry, can you rephrase?";
-    const botMessage = { type: 'bot', text: response };
+    let responseText = '';
+
+    if (match && match.pattern.toString() !== '/.*/') {
+      responseText = match.response[Math.floor(Math.random() * match.response.length)];
+      setFailCount(0);
+    } else {
+      const fallback = pairs.find(p => p.pattern.toString() === '/.*/');
+      responseText = fallback.response[Math.floor(Math.random() * fallback.response.length)];
+      setFailCount(prev => prev + 1);
+    }
+
+    const botMessage = { type: 'bot', text: responseText };
 
     setTimeout(() => {
       setMessages(prev => [...prev, botMessage]);
+
+      if (failCount + 1 >= 5) {
+        const referral = {
+          type: 'bot',
+          text: `It seems you're having some trouble. You can reach us directly for help:\n📞 +254 726 338 405\n📧 digidepot@gmail.com\n📸 Instagram: [_.simply_robin._](https://instagram.com/_.simply_robin._)`
+        };
+        setMessages(prev => [...prev, referral]);
+        setFailCount(0);
+      }
     }, 500);
 
     setInput('');
