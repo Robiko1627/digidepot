@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
-import "./signin.css"; // Add this line
+import "./signin.css"; // Custom styles
 
 const Signin = () => {
   const [email, setEmail] = useState("");
@@ -41,38 +41,41 @@ const Signin = () => {
   return (
     <>
       <Navbar />
-      <div className="signin-container">
-        <div className="signin-card">
-          <h2 className="signin-title">🔐 Sign In</h2>
-          <form onSubmit={submit}>
-            {loading && <p className="loading-msg">{loading}</p>}
-            {error && <p className="error-msg">{error}</p>}
+      <div className="signin-wrapper" style={{ minHeight: "calc(100vh - 100px)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+        <div className="signin-container">
+          <div className="signin-card">
+            <h2 className="signin-title">🔐 Sign In</h2>
+            <form onSubmit={submit}>
+              {loading && <p className="loading-msg">{loading}</p>}
+              {error && <p className="error-msg">{error}</p>}
 
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="signin-input"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="signin-input"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
 
-            <input
-              type="password"
-              placeholder="Enter your password"
-              className="signin-input"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+              <input
+                type="password"
+                placeholder="Enter your password"
+                className="signin-input"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
 
-            <button type="submit" className="signin-button">
-              Sign In
-            </button>
-          </form>
+              <button type="submit" className="signin-button">
+                Sign In
+              </button>
+            </form>
+          </div>
         </div>
       </div>
-      
+
+      <Footer />
     </>
   );
 };

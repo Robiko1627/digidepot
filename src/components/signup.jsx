@@ -3,7 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import Footer from './Footer';
 import Navbar from './Navbar';
-import './signup.css'; // Ensure this includes the lighthouse CSS below
+import './signup.css'; // Make sure this file supports your layout
 
 const Signup = () => {
   const [username, setUsername] = useState("");
@@ -60,65 +60,70 @@ const Signup = () => {
   return (
     <>
       <Navbar />
-      <div className="signup-container">
-        <div className="signup-card">
-          <h2 className="signup-title">📝 Sign Up</h2>
-          <form onSubmit={submit}>
-            {loading && <p className="loading-msg">{loading}</p>}
-            {success && <p className="success-msg">{success}</p>}
-            {error && <p className="error-msg">{error}</p>}
-            {passwordError && <p className="error-msg">{passwordError}</p>}
+      <div className="signup-wrapper" style={{ minHeight: "calc(100vh - 100px)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+        <div className="signup-container">
+          <div className="signup-card">
+            <h2 className="signup-title">📝 Sign Up</h2>
+            <form onSubmit={submit}>
+              {loading && <p className="loading-msg">{loading}</p>}
+              {success && <p className="success-msg">{success}</p>}
+              {error && <p className="error-msg">{error}</p>}
+              {passwordError && <p className="error-msg">{passwordError}</p>}
 
-            <input
-              type="text"
-              placeholder="Enter your username"
-              className="signup-input"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="signup-input"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-
-            <div className="password-wrapper">
               <input
-                type={showPassword ? "text" : "password"}
-                placeholder="Enter your password"
-                className={`signup-input ${showPassword ? 'beam-on' : ''}`}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                type="text"
+                placeholder="Enter your username"
+                className="signup-input"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 required
               />
-              <button
-                type="button"
-                className="toggle-password"
-                onClick={togglePassword}
-              >
-                {showPassword ? "🙈 Hide" : "👁 Show"}
-              </button>
-            </div>
 
-            <input
-              type="text"
-              placeholder="Enter your phone number"
-              className="signup-input"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              required
-            />
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="signup-input"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
 
-            <button type="submit" className="signup-button">Sign Up</button>
-          </form>
-          <p className="signup-link">Already have an account? <Link to="/signin">Sign In</Link></p>
+              <div className="password-wrapper">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter your password"
+                  className={`signup-input ${showPassword ? 'beam-on' : ''}`}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <button
+                  type="button"
+                  className="toggle-password"
+                  onClick={togglePassword}
+                >
+                  {showPassword ? "🙈 Hide" : "👁 Show"}
+                </button>
+              </div>
+
+              <input
+                type="text"
+                placeholder="Enter your phone number"
+                className="signup-input"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                required
+              />
+
+              <button type="submit" className="signup-button">Sign Up</button>
+            </form>
+            <p className="signup-link">
+              Already have an account? <Link to="/signin">Sign In</Link>
+            </p>
+          </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };
