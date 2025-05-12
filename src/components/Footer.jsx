@@ -42,27 +42,37 @@ const Footer = () => {
           </form>
         </div>
 
-        {/* Social Media Links */}
+        {/* Social Media & Contact Info */}
         <div className="col-md-4 text-center">
           <h5 className="text-light fw-bold mb-3">Connect With Us</h5>
           <div className="d-flex justify-content-center mb-3">
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="mx-3">
-              <img
-                src="images/facebook.png"
-                alt="Facebook"
-                className="social-icon"
-              />
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="mx-2">
+              <img src="images/facebook.png" alt="Facebook" className="social-icon" />
             </a>
-            <a href="https://instagram.com/_.simply_robin._" target="_blank" rel="noopener noreferrer" className="mx-3">
-              <img
-                src="images/instagram.jpg"
-                alt="Instagram"
-                className="social-icon"
-              />
+            <a href="https://instagram.com/_.simply_robin._" target="_blank" rel="noopener noreferrer" className="mx-2">
+              <img src="images/instagram.jpg" alt="Instagram" className="social-icon" />
             </a>
           </div>
           <p className="small">
             Follow us for the latest updates, promotions, and exciting new arrivals!
+          </p>
+          <p className="small mb-1 d-flex align-items-center justify-content-center gap-2">
+            <img
+              src="images/email-icon.png"
+              alt="Email Icon"
+              className="me-2 icon-rounded"
+            />
+            <strong>Email:</strong>
+            <a href="mailto:digidepot@gmail.com" className="text-light ms-1">digidepot@gmail.com</a>
+          </p>
+          <p className="small d-flex align-items-center justify-content-center gap-2">
+            <img
+              src="images/phone-icon.png"
+              alt="Phone Icon"
+              className="me-2 icon-rounded"
+            />
+            <strong>Phone:</strong>
+            <a href="tel:+254726338405" className="text-light ms-1">+254 726 338 405</a>
           </p>
         </div>
       </section>
